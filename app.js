@@ -8,8 +8,8 @@ const playAgain = document.getElementById("play-again");
 let gameTimer = 0;
 let score = 0;
 
-const MIN_CIRCLE_SIZE = 5;
-const MAX_CIRCLE_SIZE = 50;
+const MIN_CIRCLE_SIZE = 20;
+const MAX_CIRCLE_SIZE = 70;
 
 //start the game
 startBtn.addEventListener("click", (event) => {
@@ -26,18 +26,20 @@ playAgain.addEventListener("click", (event) => {
 });
 
 // choose the duration of the game
-timeList.addEventListener("click", playGame);
+timeList.addEventListener("click", (event) => {
+  
+  //hide durations options screen
+    screen[1].classList.add("up");
+    // reset global values to default
+  resetToDefault();
+  gameTimer = parseInt(event.target.getAttribute('data-time'));
+    playGame(event);
+});
 
 // the main eventloop of the game further
-function playGame(event) {
+function playGame() {
 
-  // reset global values to default
-  resetToDefault();
-
-  gameTimer = setGameTimer(event);
-
-  //hide durations options screen
-  screen[1].classList.add("up");
+  
 
   // begin to draw circles
   const circle = drawCircle();
@@ -52,8 +54,10 @@ function playGame(event) {
         timer.innerHTML = `00:0${gameTimer}`;
       } else if (gameTimer < 60) {
         timer.innerHTML = `00:${gameTimer}`;
+      } else if ((gameTimer % 60) < 10) {
+        timer.innerHTML = `0${parseInt(gameTimer / 60)}:0${gameTimer % 60}`;
       } else {
-        timer.innerHTML = `${parseInt(gameTimer / 60)}:${gameTimer % 60}`;
+        timer.innerHTML = `0${parseInt(gameTimer / 60)}:${gameTimer % 60}`;
       }
     }
 
@@ -63,16 +67,12 @@ function playGame(event) {
       circle.remove();
       const playerResult = document.createElement("h1");
       playerResult.id = "playerResult";
-      playerResult.innerHTML = `Your scores: <span class="primary">${score}</span>`;
+      playerResult.innerHTML = `Scores: <span class="primary">${score}</span>`;
 
       board.append(playerResult);
       playAgain.classList.remove("hide");
     }
   }, 1000);
-}
-
-function setGameTimer(event) {
-  return event.target.id;
 }
 
 function drawCircle() {
