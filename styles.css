@@ -5,6 +5,7 @@
 }
 
 body {
+  background:linear-gradient(90deg, #29323C 0%, #485563 100%);
   color: #fff;
   font-family: 'Khula', sans-serif;
   height: 100vh;

@@ -20,8 +20,9 @@ startBtn.addEventListener("click", (event) => {
 // player can play again if he/she wants
 playAgain.addEventListener("click", (event) => {
   event.preventDefault();
-  screen[2].classList.add("down");
   screen[1].className = "screen";
+  screen[2].classList.add("down");
+  
 });
 
 // choose the duration of the game
